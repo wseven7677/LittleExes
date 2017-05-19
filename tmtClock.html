@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>FUN - 番茄钟</title>
+		<style type="text/css">
+			#outter{
+				width: 80%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			#dis{
+				width: 100%;
+				border: 1px solid;
+				border-radius: 20px;
+				
+				text-align: center;
+				color: orangered;
+				font-size: 50px;
+				padding: 20px;
+			}
+			#infoTextIn{
+				margin-top: 20px;
+				border: 1px solid olivedrab;
+				border-radius: 10px;
+				width: 100%;
+				padding: 20px;
+				font-size: 20px;
+			}
+			#divBtns{
+				margin-top: 30px;
+				text-align: center;
+			}
+			.btn{
+				padding: 10px;
+				border: 1px solid orangered;
+				border-radius: 10px;
+				background: rgba(255,69,0,0.1);
+				color: orangered;
+				font-size: 20px;
+				
+				width: 180px;
+				height: 50px;
+				
+				margin-right: 30px;
+			}
+			.btn:hover{
+				background: orangered;
+				color: white;
+			}
+			#divLogs{
+				width: 100%;
+				border: 1px solid;
+				border-radius: 20px;
+				
+				color: orangered;
+				padding: 20px;
+				margin-top: 80px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="outter">
+			<div id="dis">准备好了吗</div>
+			<textarea id="infoTextIn" name="" rows="1" cols=""></textarea>
+			<div id="divBtns">
+				<button class="btn" id="btn-start">开始计时</button>
+				<button class="btn" id="btn-giveup">放弃本次</button>
+			</div>
+			<div id="divLogs">
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//=======时间显示函数==========
+		function displayTime(num){
+			var oDis = document.getElementById("dis");
+			var minute = Math.floor(num / 60);
+			var second = num - minute * 60;
+			oDis.innerText = minute + ":" + second;
+		}
+		//========点击事件======main========
+		document.getElementById("btn-start").onclick = function(){
+			var fullTime = 25 * 60 ;
+			var nowTime = fullTime;
+			
+			var clk = setInterval(function(){
+				displayTime(nowTime);
+				nowTime--;
+				
+				if(nowTime < 0){
+					clearInterval(clk);
+          document.getElementById("dis").innerText = "准备好了吗";
+				}
+			},1000);
+			document.getElementById("btn-giveup").onclick = function(){
+				clearInterval(clk);
+				document.getElementById("dis").innerText = "准备好了吗";
+			};
+		};
+	</script>
+
+</html>
