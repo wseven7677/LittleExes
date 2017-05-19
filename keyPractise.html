@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>keyPractise</title>
+	<style media="screen">
+	#theKey{
+		border: 1px solid;
+		height: 500px;
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+
+		position: relative;
+	}
+	#hero{
+		height: 80px;
+		width: 80px;
+		background-color: orange;
+		border-radius: 50%;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#behave{
+		border: 1px solid skyblue;
+		border-radius: 3px;
+		position: absolute;
+		height: 80px;
+		width: 80%;
+		bottom: 0;
+
+		margin: 10px auto 10px auto;
+		padding: 10px;
+	}
+	#speedDis{
+		position: absolute;
+		right: 30px;
+		bottom: 0;
+	}
+
+	</style>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<!-- 按键事件测试练习 -->
+	<div id="theKey">
+		x加速；z减速；方向键移动；
+		<div id="hero"></div>
+		<div id="behave"></div>
+		<div id="speedDis">speed:</div>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+
+		var scale = 5;
+		function scaleDis(){
+			$("#speedDis").html("speed:"+scale);
+		}
+
+		$("body").keydown(function(event){
+			event.preventDefault();//阻止默认事件
+			// console.log(event.which);
+
+			if(scale < 0){
+				scale = 5;
+				scaleDis();
+			}
+
+			var dir = event.which;
+			var temp;
+			switch (dir) {
+				case 37:
+					temp = $("#hero").offset().left;
+					$("#hero").offset({left: temp - scale});
+					break;
+				case 38:
+					temp = $("#hero").offset().top;
+					$("#hero").offset({top: temp - scale});
+					break;
+				case 39:
+					temp = $("#hero").offset().left;
+					$("#hero").offset({left: temp + scale});
+					break;
+				case 40:
+					temp = $("#hero").offset().top;
+					$("#hero").offset({top: temp + scale});
+					break;
+
+
+				case 88://x--加速
+					scale = scale + 5;
+					scaleDis();
+					break;
+				case 90://z--减速
+					scale = scale - 5;
+					scaleDis();
+					break;
+				default:
+
+			}
+		});
+	});
+
+	</script>
+</body>
+</html>
