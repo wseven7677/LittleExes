@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>rightClickMenu</title>
+    <style media="screen">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+      .outter{
+        width:80%;
+        height:1000px;
+        background-color: skyblue;
+        padding: 20px;
+
+        position: relative;
+      }
+      .inner{
+        width:90%;
+        height: 100px;
+        background-color: green;
+        margin: 10px;
+
+        position: relative;
+      }
+      span{
+        width: 50px;
+        height: 50px;
+        background-color: red;
+      }
+      .menu{
+        border-bottom: 3px solid #aaa;
+        border-right: 3px solid #aaa;
+        border-radius: 3px;
+        background-color: #eee;
+
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100px;
+        /*height:160px;*/
+
+        visibility:hidden;
+      }
+      .menu li{
+        list-style: none;
+        border-bottom: 1px solid gray;
+        text-align: center;
+        font-size: 20px;
+        line-height: 30px;
+      }
+      .menu a{
+        text-decoration: none;
+        color:inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outter">
+      <div class="inner">
+        1
+        <a href="http://www.163.com/">11</a>
+        <a href="http://www.163.com/">22</a>
+        <a href="http://www.163.com/">33</a>
+        <a href="http://www.163.com/">44</a>
+        <a href="http://www.163.com/">55</a>
+      </div>
+      <div class="inner" id="hehe" myhehda="yo">
+        2
+        <span>11111</span>
+      </div>
+    </div>
+    <div class="menu">
+      <ul>
+        <li><a href="#state">状态</a></li>
+        <li><a href="#skill">技能</a></li>
+        <li><a href="#bag">背包</a></li>
+        <li><a href="#team">组队</a></li>
+      </ul>
+    </div>
+    <script type="text/javascript">
+      var ospan = document.createElement("span");
+      ospan.innerText = "create it!";
+      // ospan.setAttribute("line-height","40px");
+      ospan.style.backgroundColor = "blue";//注意特性和样式的区别
+      ospan.style.position = "absolute";
+      document.getElementById("hehe").appendChild(ospan);
+
+      var body = document.getElementsByTagName("body")[0];
+      body.addEventListener("mousemove",function(event){
+        // console.log(window.event);
+        // console.log(event.screenX,event.screenY);
+        var posX = event.screenX;
+        var posY = event.screenY;
+
+        if((posX < 1600 && posX > 1500) && (posY < 160 && posY > 100)){
+          ospan.style.color = "yellow";
+        }else{
+          ospan.style.color = "inherit";
+        }
+      });
+      window.oncontextmenu = function(event){//阻止默认右键菜单
+        var posX = event.clientX;
+        var posY = event.clientY;
+
+        var onew = document.getElementsByClassName("menu")[0];
+        onew.style.left = posX+"px";
+        onew.style.top = posY+"px";
+        onew.style.visibility = "visible";
+        return false;
+      }
+      body.addEventListener("click",function(event){
+        var onew = document.getElementsByClassName("menu")[0];
+        if(event.button == 0){
+          onew.style.visibility = "hidden";
+        }
+      });
+      var oyou = document.getElementsByClassName("menu")[0];
+      var oitem = oyou.getElementsByTagName("li");
+      // console.log(oitem);
+      //注意无法批量添加事件，需要这样来循环添加：
+      for(var i = 0;i < oitem.length;++i){
+        oitem[i].addEventListener("mouseover",function(event){
+          this.style.backgroundColor = "gray";
+          this.style.color = "white";
+        });
+
+        oitem[i].addEventListener("mouseout",function(event){
+          this.style.backgroundColor = "inherit";
+          this.style.color = "inherit";
+        });
+      }
+    </script>
+  </body>
+</html>
