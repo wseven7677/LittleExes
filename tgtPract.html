@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>css伪类target练习 + flex弹性盒子</title>
+    <style media="screen">
+      *{
+        margin: 0;
+        padding: 0;
+
+        transition: all 0.3s ease-in-out;
+      }
+      a{
+        color: inherit;
+        text-decoration: none;
+      }
+      #outter{
+        height: 680px;
+        padding: 20px;
+
+        border: 1px solid;
+
+        display: flex;
+
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+
+      }
+      #outter :target .title{
+        background-color: #ff0000;
+      }
+      #outter :target .content{
+        height: 200px;
+        overflow: auto;
+      }
+
+      .item{
+        padding: 0 0 20px 0;
+
+        width: 80%;
+      }
+
+      .title{
+        background-color: #ff4040;
+        padding: 10px;
+
+        border-radius: 3px;
+
+        color: #67e667;
+      }
+
+      .content{
+        background-color: #5ccccc;
+
+        border-radius: 3px;
+        margin-top: 3px;
+
+        box-sizing: border-box;
+        height: 0;
+        overflow: hidden;
+
+        color: #fff;
+      }
+      .content p{
+        padding: 10px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="outter">
+      <div class="item" id="a1">
+        <div class="title">
+          <h2><a href="#a1">这里是标题一</a></h2>
+        </div>
+        <div class="content">
+          <p>
+            这里是内容。
+          </p>
+        </div>
+      </div>
+
+      <div class="item" id="a2">
+        <div class="title">
+          <h2><a href="#a2">这里是标题二</a></h2>
+        </div>
+        <div class="content">
+          <p>
+            这里是内容。
+          </p>
+        </div>
+      </div><div class="item" id="a3">
+        <div class="title">
+          <h2><a href="#a3">这里是标题三</a></h2>
+        </div>
+        <div class="content">
+          <p>
+            这里是内容。
+          </p>
+        </div>
+      </div><div class="item" id="a4">
+        <div class="title">
+          <h2><a href="#a4">这里是标题四</a></h2>
+        </div>
+        <div class="content">
+          <p>
+            这里是内容。
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
