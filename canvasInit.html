@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>canvas - practise</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style media="screen">
+      #canvas{
+        border: 1px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="800" height="800">a drawing for sth</canvas>
+    <script type="text/javascript">
+    function intheArea(ox,oy,sx,sy,ex,ey){
+      if(ox < ex && ox > sx){
+        if(oy < ey && oy >sy){
+          return true;
+        }
+        return false;
+      }
+      return false;
+    }
+      //dom加载完成就会执行这个函数。
+      $(function(){
+        var ocanvas = document.getElementById("canvas");
+        var context = ocanvas.getContext("2d");//2d上下文
+
+        context.fillStyle = "blue";
+        context.font = "50px Arial";
+
+        context.clearRect(100,100,300,300);
+        context.fillRect(100,100,300,300);
+
+
+        ocanvas.addEventListener("mousemove",function(event){
+          console.log(event.clientX,event.clientY);
+          if(intheArea(event.clientX,event.clientY,100,100,300,300)){
+            context.fillText("in!",600,600);
+          }else{
+            context.fillText("out!",600,600);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
