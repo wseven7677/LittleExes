@@ -84,13 +84,17 @@
             allRemove = document.getElementById('allRemove');
 
 // 添加项目：
+        var reg = new RegExp('^\\s*$');
         btnAdd.addEventListener('click', function(){
-            if(sth[0] === '你还没添加吃的'){
-                sth.shift();
+            if(! reg.test(inputFood.value)){
+                if(sth[0] === '你还没添加吃的'){
+                    sth.shift();
+                }
+
+                sth.push(inputFood.value);
+                refreshUL();
+                localStorage.setItem('food',sth);
             }
-            sth.push(inputFood.value);
-            refreshUL();
-            localStorage.setItem('food',sth);
 
             inputFood.value = '';
         });
