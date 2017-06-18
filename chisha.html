@@ -1,0 +1,140 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>吃啥呢？</title>
+    <style>
+        input {
+            height: 50px;
+            font-size: 20px;
+        }
+        #btnAdd {
+            width: 80px;
+            height: 50px;
+            font-size: 20px;
+        }
+        #allSth {
+            font-size: 14px;
+            cursor: pointer;
+        }
+        #allRemove {
+            margin-left: 30px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+        }
+        ul {
+            display: none;
+        }
+        #btnChoose {
+            width: 220px;
+            height: 100px;
+            font-size: 22px;
+        }
+        span {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" placeholder="在此添加可以吃的东西" >
+    <button id="btnAdd">添加</button>
+    <hr>
+    <span id="allSth">查看所有备选项</span>
+    <span id="allRemove">清空所有备选项</span>
+    <ul>
+
+    </ul>
+    <hr>
+    <button id="btnChoose">点我开始决定吃啥！</button><br>
+    <span id="theChosen"></span><hr>
+    <script>
+
+// 从localstorage初始化：
+        var sth;
+        if(!localStorage.getItem('food')){
+            sth = new Array();
+            sth.push('你还没添加吃的');
+        }else{
+            sth = localStorage.getItem('food').split(',');
+        }
+
+        function refreshUL(){
+            var i,
+                tmpLi,
+                theUL = document.getElementsByTagName('ul')[0];
+
+            theUL.innerHTML = "";
+
+            for(i = 0; i < sth.length;++i){
+                tmpLi = document.createElement('li');
+                tmpLi.innerText = sth[i];
+                theUL.appendChild(tmpLi);
+            }
+        }
+
+
+// 正文：-----------------
+        var btnChoose = document.getElementById('btnChoose'),
+            theChosen = document.getElementById('theChosen'),
+            btnAdd = document.getElementById('btnAdd'),
+            inputFood =document.getElementsByTagName('input')[0],
+            allSth = document.getElementById('allSth'),
+            allRemove = document.getElementById('allRemove');
+
+// 添加项目：
+        btnAdd.addEventListener('click', function(){
+            if(sth[0] === '你还没添加吃的'){
+                sth.shift();
+            }
+            sth.push(inputFood.value);
+            refreshUL();
+            localStorage.setItem('food',sth);
+
+            inputFood.value = '';
+        });
+
+// 查看项目：
+        var flag = false;
+        allSth.addEventListener('click', function(){
+            if(flag){
+                flag = false;
+                document.getElementsByTagName('ul')[0].style.display = 'none';
+            }else{
+                flag = true;
+                refreshUL();
+                document.getElementsByTagName('ul')[0].style.display = 'block';
+            }
+        });
+
+// 清空备选：
+        allRemove.addEventListener('click', function(){
+            var rst = confirm('你确定要清空备选列表吗？');
+            if(rst){
+                sth = new Array();
+                sth.push('你还没添加吃的');
+                refreshUL();
+                localStorage.setItem('food',sth);
+            }
+        });
+
+// 决定吃啥：
+        var flagFlash = false,
+            timeId;
+        btnChoose.addEventListener('click',function(){
+            if(!flagFlash){
+                flagFlash = true;
+                btnChoose.innerText = '点我停止！';
+                timeId = window.setInterval(function(){
+                    theChosen.innerText = sth[Math.floor(Math.random()*sth.length)];
+                },50);
+            }else{
+                flagFlash = false;
+                window.clearInterval(timeId);
+                btnChoose.innerText = '点我开始决定吃啥！';
+            }
+        });
+    </script>
+</body>
+</html>
